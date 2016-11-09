@@ -11,6 +11,7 @@
 -- Description: Single Half Adder.
 --
 -- Dependencies: 
+					
 --
 -- Revision: 
 -- Revision 0.01 - File Created
@@ -37,13 +38,13 @@ entity HalfAdder_VHDL is
 end HalfAdder_VHDL;
 
 architecture Behavioral of HalfAdder_VHDL is
-	--define component of a two input XOR gate
+	--define component input and outputs for a two input XOR gate
 	component TwoInputXOR_VHDL
 		port( a : in STD_LOGIC;
 				b : in STD_LOGIC;
 				c : out STD_LOGIC);
 	end component;
-	
+	--define component input and outputs for a two input and gate
 	component TwoInputAND_VHDL
 		port( a : in STD_LOGIC;
 				b : in STD_LOGIC;
@@ -53,9 +54,11 @@ architecture Behavioral of HalfAdder_VHDL is
 	
 	
 begin
-	process(a, b)
+	process(a, b)--watch for change in a and b
 		begin
+			--define Sum input-output relationship
 			s <= a xor b after 14ns;
+			--define carry input-output relationship
 			Cout <= a and b after 7ns;
 	end process;
 end Behavioral;
