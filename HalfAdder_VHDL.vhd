@@ -54,12 +54,10 @@ architecture Behavioral of HalfAdder_VHDL is
 	
 	
 begin
-	process(a, b)--watch for change in a and b
-		begin
-			--define Sum input-output relationship
-			s <= a xor b after 14ns;
-			--define carry input-output relationship
-			Cout <= a and b after 7ns;
-	end process;
+	--define Sum input-output relationship
+	sumIO: TwoInputXOR_VHDL port map (a, b, s);
+	--define carry input-output relationship
+	CoutIO: TwoInputAND_VHDL port map (a, b, Cout);
+	
 end Behavioral;
 
