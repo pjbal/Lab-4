@@ -1,14 +1,14 @@
 --------------------------------------------------------------------------------
--- Company: 
--- Engineer:
+-- Company: QMUL DSD Group2
+-- Engineer: Patrick Balcombe
 --
--- Create Date:   11:52:23 11/10/2016
--- Design Name:   
+-- Create Date:   20:02:06 11/10/2016
+-- Design Name:   8-bit comparitor
 -- Module Name:   H:/Documents/DSD/LAB4/eightbit_comparator/eightbit_comparator_tb.vhd
 -- Project Name:  eightbit_comparator
 -- Target Device:  
 -- Tool versions:  
--- Description:   
+-- Description:   8 bit comparitor
 -- 
 -- VHDL Test Bench Created by ISE for module: eightbit_comparator
 -- 
@@ -41,22 +41,19 @@ ARCHITECTURE behavior OF eightbit_comparator_tb IS
  
     COMPONENT eightbit_comparator
     PORT(
-         InA : IN  std_logic_vector(3 downto 0);
-         C_in : IN  std_logic;
-         Sum : OUT  std_logic_vector(3 downto 0);
-         C_out : OUT  std_logic
+         InA : IN  std_logic_vector (7 downto 0);
+         InB : IN  std_logic_vector (7 downto 0);
+         Output : OUT  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal InA : std_logic_vector(3 downto 0) := (others => '0');
-   signal C_in : std_logic := '0';
+   signal InA : std_logic_vector (7 downto 0):= (others => '0');
+   signal InB : std_logic_vector (7 downto 0):= (others => '0');
 
  	--Outputs
-   signal Sum : std_logic_vector(3 downto 0);
-   signal C_out : std_logic;
-
+   signal Output : std_logic;
 
  
 BEGIN
@@ -64,9 +61,8 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: eightbit_comparator PORT MAP (
           InA => InA,
-          C_in => C_in,
-          Sum => Sum,
-          C_out => C_out
+          InB => InB,
+          Output => Output
         );
 
 
@@ -77,39 +73,35 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 100 ns;	
 
-		--1st input, check incrementing from 0, correct ouput sum=0001, C_out=0
-		InA <= "0000";
-		C_in <= '1';		
-		wait for 100 ns; 
+		--test stimulus 1
+		InA <= "00000000";
+		InB <= "00000001";
+		wait for 100 ns;
 		
-		--2nd input, check carry when 0--correct ouput sum=0000, C_out=0
-		InA <= "0000";
-		C_in <= '0';
-		wait for 100 ns; 
+		--test stimulus 2
+		InA <= "00000000";
+		InB <= "00000000";
+		wait for 100 ns;
 		
-		--3rd input, check carry --correct ouput sum=1100, C_out=0
-		InA <= "1011";
-		C_in <= '1';
-		wait for 100 ns; 
+		--test stimulus 3
+		InA <= "11111111";
+		InB <= "11111111";
+		wait for 100 ns;
 		
-		--4th input, check carry--correct ouput sum=1000, C_out=0
-		InA <= "1000";
-		C_in <= '0';
-		wait for 100 ns; 
+		--test stimulus 4
+		InA <= "11110111";
+		InB <= "10111111";
+		wait for 100 ns;
 		
-		--5th input, check carry--correct ouput sum=1001, C_out=0
-		InA <= "1000";
-		C_in <= '1';
-		wait for 100 ns; 
+		--test stimulus 5
+		InA <= "01010101";
+		InB <= "10101010";
+		wait for 100 ns;
 		
-		--6th input, check when input all ones--correct ouput sum=1111, C_out=0
-		InA <= "1111";
-		C_in <= '0';
-		wait for 100 ns; 
-		
-		--7th input, check when input all ones--correct ouput sum=0000, C_out=1
-		InA <= "1111";
-		C_in <= '1';
+		--test stimulus 6
+		InA <= "01010101";
+		InB <= "01010101";
+		wait for 100 ns;
 
       wait;
    end process;
