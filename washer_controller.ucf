@@ -1,0 +1,18 @@
+#slide switches
+NET "spin_dry" LOC = D16;
+NET "door_open" LOC = B16;
+
+
+#Push buttons
+NET "start_wash" LOC = C12;
+NET "reset" LOC = C10;
+
+#LEDS
+NET "drain" LOC = A12;
+NET "rotate_drum" LOC = A13;
+NET "soap" LOC = B13;
+NET "water_pump" LOC = A14;
+NET "door_lock" LOC = B14;
+
+#CLK signal input
+NET "CLK" LOC = A10;
