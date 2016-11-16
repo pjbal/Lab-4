@@ -74,31 +74,31 @@ end washer_controller;
 architecture Behavioral of washer_controller is
 
 -- SUB-COMPONENTS
-component two_input_mux
-    Port ( a : in std_logic;
-           b : in std_logic;
-           control : in std_logic;
-           f : out std_logic);
+component TwoInputMultiplexor_VHDL
+    Port ( a : in  STD_LOGIC;
+           b : in  STD_LOGIC;
+           Con : in  STD_LOGIC;
+           d : out  STD_LOGIC);
 end component;
 
-component washer_next_state_logic
+component washer_nextStateLog
 	Port (state : in std_logic_vector (2 downto 0);
 			control : in std_logic;
 			door_open : in std_logic;
 			next_state : out std_logic_vector (2 downto 0));
 end component;
 
-component nbit_reg 
+component nbitReg 
 	 generic ( n : positive);
-    Port ( D_inputs : in std_logic_vector(n-1 downto 0);
-           CLK : in std_logic;
-           reset : in std_logic;
-           preset : in std_logic;
-           Q_outputs : out std_logic_vector(n-1 downto 0);
-           Q_bar_outputs : out std_logic_vector(n-1 downto 0));
+    Port ( CLK : in  STD_LOGIC;
+           D_inputs : in  STD_LOGIC_vector (n-1 downto 0);
+           reset : in  STD_LOGIC;
+           preset : in  STD_LOGIC;
+           Q_outputs : inout  STD_LOGIC_vector (n-1 downto 0);
+           Q_bar_outputs : inout  STD_LOGIC_vector (n-1 downto 0));
 end component;
 
-component washer_output_logic
+component washer_outputLog
 	  Port (state : in std_logic_vector (2 downto 0);
 			  door_lock : out std_logic;
            water_pump : out std_logic;
@@ -114,13 +114,13 @@ signal mux_out : std_logic;
 begin
 
 -- DEVICE INSTANCES
- mux : two_input_mux port map (start_wash, spin_dry, state(2), mux_out);
+ mux : TwoInputMultiplexor_VHDL port map (start_wash, spin_dry, state(2), mux_out);
 
- ns_logic : washer_next_state_logic port map (state, mux_out, door_open, next_state);
+ ns_logic : washer_nextStateLog port map (state, mux_out, door_open, next_state);
  
- reg : nbit_reg generic map (3) port map (next_state, CLK, reset, '0', state, dummy);
+ reg : nbitReg generic map (3) port map (CLK, next_state,  reset, '0', state, dummy);
  
- op_logic : washer_output_logic port map (state, door_lock, water_pump, soap, rotate_drum, drain);  
+ op_logic : washer_outputLog port map (state, door_lock, water_pump, soap, rotate_drum, drain);  
 
 end Behavioral;
 
