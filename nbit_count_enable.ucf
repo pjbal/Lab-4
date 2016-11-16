@@ -1,5 +1,5 @@
 #Push buttons
-NET "count_enable" LOC = C12;
+NET "enable" LOC = C12;
 NET "reset" LOC = C10;
 
 #LEDS

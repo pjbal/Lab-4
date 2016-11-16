@@ -9,7 +9,7 @@ NET "D_inputs[1]" LOC = D16;
 NET "D_inputs[0]" LOC = B16;
 
 #Push buttons
-NET "load_count" LOC = D12;	#??????????
+NET "load" LOC = D12;	
 NET "count_enable" LOC = C12;
 NET "reset" LOC = C10;
 
